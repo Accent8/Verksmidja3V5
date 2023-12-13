@@ -18,7 +18,7 @@ IPAddress local_ip(192, 168, 1, 1);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 
-
+// Keypad takkar
 char keypadKeys[KEYPAD_ROWS][KEYPAD_COLS] = {
   { '1', '2', '3' },
   { '4', '5', '6' },
@@ -41,16 +41,14 @@ const int countdownDuration = 20 * 1000;
 bool countdownActive = false;
 bool redLEDState = false;
 
-
-
 WebServer server(80);
-
 
 void handle_OnConnect() {
   server.send(200, "text/html", SendHTML());
 }
 
 void handle_kveikja() {
+  // Keyrir þegar takki er ýttur á vefsíðu
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Time left:   s");
@@ -64,8 +62,6 @@ void handle_kveikja() {
 void handle_NotFound() {
   server.send(404, "text/plain", "Not found");
 }
-
-
 
 String SendHTML() {
   String ptr = "<!DOCTYPE html> <html>\n";
@@ -148,7 +144,7 @@ void loop() {
     updateLCD(remainingTime);
 
     if (remainingTime == 0) {
-      // Display "!BOOM!" when countdown reaches 0
+      // Display "BOOM!" when countdown reaches 0
       lcd.clear();
       lcd.setCursor(5, 0);
       lcd.print("BOOM!");
@@ -162,6 +158,8 @@ void loop() {
   char key = keypad.getKey();
 
   if (key) {
+    // Ef takki er ýttur á keypad
+
     tone(speakerPin, 2000, 50);
     Serial.println(key);
 
@@ -176,6 +174,8 @@ void loop() {
         }
       } else if (key == '#') {
         if (arrayIndex == 3 && myArray[0] == 1 && myArray[1] == 2 && myArray[2] == 3) {
+          // Ef réttur kóði er settur inn (123)
+
           Serial.println("Correct code!");
           digitalWrite(LED, HIGH);
           tone(speakerPin, 1500, 1000);
